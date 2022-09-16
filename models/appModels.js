@@ -23,6 +23,7 @@ const insert = ({ name, email, phone, pass, location }) => {
   let db = new sqlite.Database("././database/database.db");
   return new Promise((resolve, reject) => {
     db.serialize(() => {
+      db.Ope
       db.run(
         "INSERT INTO admin(fullName,email,phone,location,password) VALUES(?,?,?,?,?)",
         [name, email, phone, location, md5(pass)],
