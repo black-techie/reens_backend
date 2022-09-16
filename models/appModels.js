@@ -2,8 +2,8 @@ const sqlite = require("sqlite3").verbose();
 var md5 = require("md5");
 var ReverseMd5 = require('reverse-md5')
 
+
 const getAll = () => {
-  //connect to a database
   let db = new sqlite.Database("././database/database.db");
   db.serialize(() => {
     db.each(`SELECT * FROM admin`, (err, row) => {
@@ -15,7 +15,6 @@ const getAll = () => {
       console.log(row);
     });
   });
-
   db.close();
 };
 
@@ -35,8 +34,8 @@ const insert = ({ name, email, phone, pass, location }) => {
     });
     db.close();
   });
-
 };
+
 
 const login = ({ login, pass, type }) => {
   let db = new sqlite.Database("././database/database.db");
@@ -54,6 +53,7 @@ const login = ({ login, pass, type }) => {
     db.close();
   });
 };
+
 
 module.exports = {
   insert,
