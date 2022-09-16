@@ -23,7 +23,6 @@ app.post("/api/register", (req, res) => {
                 return res.status(401).json({ error: true, message: results })
             }
         });
-    db_res = insert(req.body);
 
 });
 app.post("/api/login", (req, res) => {
