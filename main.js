@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const { insert, getAll, login } = require("./models/appModels")
+require('dotenv').config()
 
 app.use(express.json())
 
@@ -9,8 +10,8 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get("/", (req, res) =>{
-    return res.status(200).json({test: "control"})
+app.get("/", (req, res) => {
+    return res.status(200).json({ test: "control" })
 })
 app.post("/api/register", (req, res) => {
     let promise = insert(req.body)
@@ -39,5 +40,6 @@ app.post("/api/login", (req, res) => {
 });
 
 app.listen(4000, () => {
-    console.log("listening");
+    console.log()
+    console.log("listening  PORT = ",process.env.PORT);
 });

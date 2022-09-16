@@ -17,8 +17,6 @@ const getAll = () => {
   });
 
   db.close();
-
-  return "hello"
 };
 
 
