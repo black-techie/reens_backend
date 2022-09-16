@@ -10,7 +10,7 @@ app.use((req, res, next) => {
 })
 
 app.get("/", (req, res) =>{
-    return "hallowen";
+    return res.status(200).json({test: "control"})
 })
 app.post("/api/register", (req, res) => {
     let promise = insert(req.body)
