@@ -9,6 +9,9 @@ app.use((req, res, next) => {
     next()
 })
 
+app.get("/", (req, res) =>{
+    return "hallowen";
+})
 app.post("/api/register", (req, res) => {
     let promise = insert(req.body)
         .then((results) => {
