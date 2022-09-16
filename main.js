@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const { insert, getAll, login } = require("./models/appModels")
 require('dotenv').config()
+const port = process.env.PORT || 3000
 
 app.use(express.json())
 
@@ -38,7 +39,7 @@ app.post("/api/login", (req, res) => {
 
 });
 
-app.listen(4000, () => {
+app.listen(port, () => {
     console.log()
-    console.log("listening  PORT = ",process.env.PORT);
+    console.log("listening  PORT = ",port);
 });
