@@ -19,19 +19,51 @@ const getAll = () => {
 };
 
 
-const insert = ({ name, email, phone, pass, location }) => {
+const insertAdmin = ({ name, email, phone, pass, location }) => {
   let db = new sqlite.Database("././database/database.db");
   return new Promise((resolve, reject) => {
     db.serialize(() => {
-      db.Ope
       db.run(
         "INSERT INTO admin(fullName,email,phone,location,password) VALUES(?,?,?,?,?)",
         [name, email, phone, location, md5(pass)],
         (err, row) => {
           if (err) reject(err);
-          resolve(true);
+          resolve();
         }
-      );  
+      );
+    });
+    db.close();
+  });
+};
+const insertUser = ({ name, cardid, phone, location }) => {
+  let db = new sqlite.Database("././database/database.db");
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run(
+        "INSERT INTO users(fullName,cardId ,phone,location) VALUES(?,?,?,?,?)",
+        [name, cardid, phone, location],
+        (err, row) => {
+          if (err) reject(err);
+          resolve();
+        }
+      );
+    });
+    db.close();
+  });
+};
+
+const insertMeter= ({ location, dimension, meterId, price }) => {
+  let db = new sqlite.Database("././database/database.db");
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run(
+        "INSERT INTO meter(meterId,dimension ,pricePerVolume,location) VALUES(?,?,?,?,?)",
+        [meterId, dimension, price, location],
+        (err, row) => {
+          if (err) reject(err);
+          resolve();
+        }
+      );
     });
     db.close();
   });
@@ -55,9 +87,43 @@ const login = ({ login, pass, type }) => {
   });
 };
 
+const validate_email = ({ email }) => {
+  let db = new sqlite.Database("././database/database.db");
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      command = "SELECT id FROM admin WHERE email = ?";
+      db.get(command, email, (err, row) => {
+        if (err) reject(err);
+        resolve(row);
+      });
+    });
+    db.close();
+  });
+};
+
+const validate_phone = ({ phone }) => {
+  let db = new sqlite.Database("././database/database.db");
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      command = "SELECT id FROM admin WHERE phone = ?";
+      db.get(command, phone, (err, row) => {
+        if (err) reject(err);
+        resolve(row);
+      });
+    });
+    db.close();
+  });
+};
+
+
+
 
 module.exports = {
-  insert,
+  insertAdmin,
   getAll,
-  login
+  login,
+  validate_email,
+  validate_phone,
+  insertUser,
+  insertMeter
 };

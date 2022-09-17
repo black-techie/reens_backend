@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { insert, getAll, login } = require("./models/appModels")
+const { insertAdmin, insertUser, insertMeter, login, validate_email, validate_phone } = require("./models/appModels")
 require('dotenv').config()
 const port = process.env.PORT || 3000
 
@@ -14,8 +14,9 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     return res.status(200).json({ test: "control" })
 })
-app.post("/api/register", (req, res) => {
-    let promise = insert(req.body)
+
+app.get("/api/meter/register", (req, res) => {
+    let promise = insertMeter(req.body)
         .then((results) => {
             if (results === true) {
                 return res.status(200).json({ error: false, message: "registered successful" });
@@ -24,8 +25,34 @@ app.post("/api/register", (req, res) => {
                 return res.status(401).json({ error: true, message: results })
             }
         });
+})
 
+app.get("/api/user/register", (req, res) => {
+    let promise = insertUser(req.body)
+        .then((results) => {
+            if (results === true) {
+                return res.status(200).json({ error: false, message: "registered successful" });
+            }
+            else {
+                return res.status(401).json({ error: true, message: results })
+            }
+        });
+})
+
+app.post("/api/register", (req, res) => {
+    let promise = insertAdmin(req.body)
+        .then((results) => {
+            if (results === true) {
+                return res.status(200).json({ error: false, message: "registered successful" });
+            }
+            else {
+                return res.status(401).json({ error: true, message: results })
+            }
+        });
 });
+
+
+
 app.post("/api/login", (req, res) => {
     let promise = login(req.body)
         .then((results) => {
@@ -41,5 +68,5 @@ app.post("/api/login", (req, res) => {
 
 app.listen(port, () => {
     console.log()
-    console.log("listening  PORT = ",port);
+    console.log("listening  PORT = ", port);
 });
